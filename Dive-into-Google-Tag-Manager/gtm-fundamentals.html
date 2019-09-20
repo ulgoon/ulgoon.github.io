@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    search: {
+      root: '/',
+      path: 'search.xml'
+    },
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+  <meta name="description" content="Introduce Google Tag ManagerGoogle Tag Manager란? Google Tag Manager(이하 GTM)는 2012년 Google이 만든 웹사이트 추적, 분석을 위한 javaScript와 HTML 태그 관리 시스템입니다. 웹페이지(https://tagmanager.google.com/)에서 정보수집을 위한 태그를 생성, 적용한">
+<meta name="keywords" content="Google Tag Manager, Python, git, golang, django, Google Marketing Platform">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GTM Fundamentals">
+<meta property="og:url" content="https://ulgoon.github.io/Dive-into-Google-Tag-Manager/gtm-fundamentals.html">
+<meta property="og:site_name" content="Ulgoon&#39;s blog">
+<meta property="og:description" content="Introduce Google Tag ManagerGoogle Tag Manager란? Google Tag Manager(이하 GTM)는 2012년 Google이 만든 웹사이트 추적, 분석을 위한 javaScript와 HTML 태그 관리 시스템입니다. 웹페이지(https://tagmanager.google.com/)에서 정보수집을 위한 태그를 생성, 적용한">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://ulgoon.github.io/images/gtm/gtm-architecture.png">
+<meta property="og:image" content="https://ulgoon.github.io/images/blank-tag.jpg">
+<meta property="og:image" content="https://ulgoon.github.io/images/black-tag-with-white-bg.jpg">
+<meta property="og:updated_time" content="2019-08-14T11:13:26.545Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GTM Fundamentals">
+<meta name="twitter:description" content="Introduce Google Tag ManagerGoogle Tag Manager란? Google Tag Manager(이하 GTM)는 2012년 Google이 만든 웹사이트 추적, 분석을 위한 javaScript와 HTML 태그 관리 시스템입니다. 웹페이지(https://tagmanager.google.com/)에서 정보수집을 위한 태그를 생성, 적용한">
+<meta name="twitter:image" content="https://ulgoon.github.io/images/gtm/gtm-architecture.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://ulgoon.github.io/Dive-into-Google-Tag-Manager/gtm-fundamentals">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PCQJX9G');</script>
+  <!-- End Google Tag Manager -->
+  <title>GTM Fundamentals | Ulgoon's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PCQJX9G" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ulgoon's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Gopher</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-gtm">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/dive-into-google-tag-manager/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>gtm</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-git">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/git-for-newbie/" rel="section"><i class="menu-item-icon fa fa-fw fa-git"></i> <br>git</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="javascript:;" class="popup-trigger">
+          
+            <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h2 class="post-title" itemprop="name headline">GTM Fundamentals
+
+</h2>
+
+<div class="post-meta">
+  
+  
+
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <h1 id="Introduce-Google-Tag-Manager"><a href="#Introduce-Google-Tag-Manager" class="headerlink" title="Introduce Google Tag Manager"></a>Introduce Google Tag Manager</h1><h2 id="Google-Tag-Manager란"><a href="#Google-Tag-Manager란" class="headerlink" title="Google Tag Manager란?"></a>Google Tag Manager란?</h2><ul>
+<li>Google Tag Manager(이하 GTM)는 2012년 Google이 만든 웹사이트 추적, 분석을 위한 javaScript와 HTML 태그 관리 시스템입니다.</li>
+<li>웹페이지(<a href="https://tagmanager.google.com/)에서" target="_blank" rel="noopener">https://tagmanager.google.com/)에서</a> 정보수집을 위한 태그를 생성, 적용한 뒤 다양한 플랫폼으로 수집한 정보를 내보낼 수 있습니다.</li>
+</ul>
+<h3 id="장점"><a href="#장점" class="headerlink" title="장점"></a>장점</h3><ul>
+<li>GTM으로 다양한 추적 도구 관리를 일원화 하여 효율적인 관리 가능</li>
+<li>사이트 로딩속도 저하를 막고, 태그의 오작동을 방지</li>
+<li>3rd Party 플랫폼도 비교적 간단히 적용 가능</li>
+<li>하나의 액션에 많은 정보 수집이 가능</li>
+</ul>
+<h3 id="GTM의-구성"><a href="#GTM의-구성" class="headerlink" title="GTM의 구성"></a>GTM의 구성</h3><span itemprop="image" itemscope itemtype="http://schema.org/ImageObject"><img itemprop="url image" src="/images/gtm/gtm-architecture.png" class="full-image" alt="GTM resources" title="gtm-resources" style="max-width: none; width: 100%;"><meta itemprop="width" content="auto"><meta itemprop="height" content="auto"></span>
+<p><a href="https://developers.google.com/tag-manager/api/v2/" target="_blank" rel="noopener">출처: Google Tag Manager API documentation</a></p>
+<h4 id="Account"><a href="#Account" class="headerlink" title="Account"></a>Account</h4><ul>
+<li>조직 또는 서비스의 최상위 수준. Account(계정)은 회사별 하나 존재</li>
+<li>ex) Kakao Corp.(account) -&gt; kakao map(web), kakao map(app), daum(web), daum(app) (containers)</li>
+</ul>
+<h4 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h4><ul>
+<li>태그들의 모음</li>
+<li>한 계정(회사)가 가진 여러 서비스의 웹, 앱 등의 태그를 분할 관리</li>
+</ul>
+<h4 id="Workspace"><a href="#Workspace" class="headerlink" title="Workspace"></a>Workspace</h4><ul>
+<li>컨테이너에 관리해야 할 태그가 혼재할 경우 또는 특정한 플랫폼에서만 쓰일 변수들을 나누어 관리</li>
+<li>각 작업공간의 변경사항을 제출하여 컨테이너에 반영</li>
+<li>1개의 Container에 3개의 Workspace 구성 가능</li>
+</ul>
+<h4 id="Tag"><a href="#Tag" class="headerlink" title="Tag"></a>Tag</h4><ul>
+<li>웹사이트 또는 모바일 앱에 제품을 통합하는데 도움이 되도록 애널리틱스, 마케팅 또는 지원 제공업체가 제공하는 코드 세그먼트</li>
+<li>트리거와 변수를 활용하여 통합 시점을 결정</li>
+<li>GTM을 활용하면 소스코드에 직접 추가하지 않고 구현 가능</li>
+</ul>
+<h4 id="trigger"><a href="#trigger" class="headerlink" title="trigger"></a>trigger</h4><ul>
+<li>실행 시점에서 참 또는 거짓을 판별하는 조건</li>
+<li>태그에 적용시 태그 실행여부를 결정</li>
+</ul>
+<h4 id="Variable"><a href="#Variable" class="headerlink" title="Variable"></a>Variable</h4><ul>
+<li>변경되는 값을 나타내기위해 사용하는 기호</li>
+<li>태그에서 변수의 쓰임: 시점마다 달라지는 값을 태그에 반영<ul>
+<li>ex) {{Click Text}} : click text(변수)값을 해당 플랫폼에 전달</li>
+</ul>
+</li>
+<li>트리거에서 변수의 쓰임: 트리거가 실행될 시점을 지정하는 필터를 정의하는 데 사용<ul>
+<li>ex) {{Page Path}} contains /shop : page path(변수) 값이 ‘/shop’을 포함할 때 </li>
+</ul>
+</li>
+</ul>
+<h2 id="Google-Tag-Manager-시작하기"><a href="#Google-Tag-Manager-시작하기" class="headerlink" title="Google Tag Manager 시작하기"></a>Google Tag Manager 시작하기</h2><h3 id="GTM-Configuration"><a href="#GTM-Configuration" class="headerlink" title="GTM Configuration"></a>GTM Configuration</h3><ul>
+<li><a href="https://marketingplatform.google.com/intl/ko/about/tag-manager/" target="_blank">Google Tag Manager 소개페이지</a></li>
+<li>Sign up -&gt; Create Account -&gt; Create Container -&gt; Agree Terms &amp; Conditions -&gt; Done!</li>
+<li>Embed Google Tag Manager code snippet to your blog.</li>
+</ul>
+<h3 id="GA-with-GTM-Configuration"><a href="#GA-with-GTM-Configuration" class="headerlink" title="GA with GTM Configuration"></a>GA with GTM Configuration</h3><ul>
+<li>Create user-defined variable: AnalyticsID, GASettings-default</li>
+<li>You can easily switch tracking ID by using analyticsID.</li>
+<li>You can use tracking ID value again as possible as you want.</li>
+<li>If you want to create custom report, You can save all values and configurations to another google analytics variable(ex. GASettings-Mobile).</li>
+</ul>
+<h3 id="GA-Page-view-tag"><a href="#GA-Page-view-tag" class="headerlink" title="GA - Page view tag"></a>GA - Page view tag</h3><ul>
+<li>Create Tag</li>
+</ul>
+<h3 id="Element-click-event-tag"><a href="#Element-click-event-tag" class="headerlink" title="Element click event tag"></a>Element click event tag</h3><ul>
+<li>To get how many clicks occured in my page is very important. </li>
+<li>Almost 80% of event is related with click.</li>
+</ul>
+<h4 id="Click-trigger-test-with-images"><a href="#Click-trigger-test-with-images" class="headerlink" title="Click trigger test with images"></a>Click trigger test with images</h4><span itemprop="image" itemscope itemtype="http://schema.org/ImageObject"><img itemprop="url image" src="/images/blank-tag.jpg" class="full-image" alt="blank tag with black background" title="white-blank-tag" style="max-width: none; width: 80%;"><meta itemprop="width" content="auto"><meta itemprop="height" content="auto"></span>
+
+<span itemprop="image" itemscope itemtype="http://schema.org/ImageObject"><img itemprop="url image" src="/images/black-tag-with-white-bg.jpg" class="full-image" alt="white tag with white background" title="black-blank-tag" style="max-width: none; width: 80%;"><meta itemprop="width" content="auto"><meta itemprop="height" content="auto"></span>
+
+<h3 id="GA-Event-vs-GTM-Event"><a href="#GA-Event-vs-GTM-Event" class="headerlink" title="GA Event vs GTM Event"></a>GA Event vs GTM Event</h3><h3 id="Scroll-depth-tracking-tag"><a href="#Scroll-depth-tracking-tag" class="headerlink" title="Scroll depth tracking tag"></a>Scroll depth tracking tag</h3><h3 id="Link-click-event-tag-Outbound-link-click-tag"><a href="#Link-click-event-tag-Outbound-link-click-tag" class="headerlink" title="Link click event tag, Outbound link click tag"></a>Link click event tag, Outbound link click tag</h3><h4 id="Link-click-test"><a href="#Link-click-test" class="headerlink" title="Link click test"></a>Link click test</h4><ul>
+<li><a href="https://www.google.com/" target="_blank">Go to google</a></li>
+<li><a href="https://github.com/ulgoon" target="_blank">Go to github</a></li>
+<li><a href="/" target="_blank">Go to Home</a></li>
+</ul>
+<h4 id="What-is-outbound"><a href="#What-is-outbound" class="headerlink" title="What is outbound?"></a>What is outbound?</h4><h3 id="User-Visibility-event-tag"><a href="#User-Visibility-event-tag" class="headerlink" title="User Visibility event tag"></a>User Visibility event tag</h3>
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+  <p class="site-author-name" itemprop="name">Clifford Choi</p>
+  <div class="site-description motion-element" itemprop="description">Welcome to my blog</div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        
+        
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+        
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/ulgoon" title="GitHub &rarr; https://github.com/ulgoon" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:me@ulgoon.com" title="E-Mail &rarr; mailto:me@ulgoon.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://instagram.com/u1g00n" title="Instagram &rarr; https://instagram.com/u1g00n" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduce-Google-Tag-Manager"><span class="nav-number">1.</span> <span class="nav-text">Introduce Google Tag Manager</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Google-Tag-Manager란"><span class="nav-number">1.1.</span> <span class="nav-text">Google Tag Manager란?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#장점"><span class="nav-number">1.1.1.</span> <span class="nav-text">장점</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GTM의-구성"><span class="nav-number">1.1.2.</span> <span class="nav-text">GTM의 구성</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Account"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Account</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Container"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">Container</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Workspace"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">Workspace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tag"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">Tag</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#trigger"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">trigger</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Variable"><span class="nav-number">1.1.2.6.</span> <span class="nav-text">Variable</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Google-Tag-Manager-시작하기"><span class="nav-number">1.2.</span> <span class="nav-text">Google Tag Manager 시작하기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GTM-Configuration"><span class="nav-number">1.2.1.</span> <span class="nav-text">GTM Configuration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GA-with-GTM-Configuration"><span class="nav-number">1.2.2.</span> <span class="nav-text">GA with GTM Configuration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GA-Page-view-tag"><span class="nav-number">1.2.3.</span> <span class="nav-text">GA - Page view tag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Element-click-event-tag"><span class="nav-number">1.2.4.</span> <span class="nav-text">Element click event tag</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Click-trigger-test-with-images"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">Click trigger test with images</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GA-Event-vs-GTM-Event"><span class="nav-number">1.2.5.</span> <span class="nav-text">GA Event vs GTM Event</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scroll-depth-tracking-tag"><span class="nav-number">1.2.6.</span> <span class="nav-text">Scroll depth tracking tag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Link-click-event-tag-Outbound-link-click-tag"><span class="nav-number">1.2.7.</span> <span class="nav-text">Link click event tag, Outbound link click tag</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Link-click-test"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">Link click test</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#What-is-outbound"><span class="nav-number">1.2.7.2.</span> <span class="nav-text">What is outbound?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User-Visibility-event-tag"><span class="nav-number">1.2.8.</span> <span class="nav-text">User Visibility event tag</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Clifford Choi</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+  <script src="/js/js.cookie.js?v=7.2.0"></script>
+  <script src="/js/scroll-cookie.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.2.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>
