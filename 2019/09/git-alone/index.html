@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ulgoon.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="앞의 게시물에서 git의 기본적인 시작법을 배웠다면, 이제부터는 본격적인 개발을 위한 git을 배워봅니다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="혼자 해보는 git">
+<meta property="og:url" content="https://ulgoon.github.io/2019/09/git-alone/index.html">
+<meta property="og:site_name" content="Ulgoon&#39;s blog">
+<meta property="og:description" content="앞의 게시물에서 git의 기본적인 시작법을 배웠다면, 이제부터는 본격적인 개발을 위한 git을 배워봅니다.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://asciinema.org/a/Fu27tl0y6RpHBPnTBHpPHh8St.svg">
+<meta property="og:image" content="https://asciinema.org/a/Y55mgQP0Yn8r6EEyBRSk0ysxX.svg">
+<meta property="og:image" content="https://asciinema.org/a/PplVwNAZND1lApmRLRo2q3jem.svg">
+<meta property="og:image" content="https://asciinema.org/a/ifWYyxutPfg04bTMrFA75KVms.svg">
+<meta property="og:image" content="https://asciinema.org/a/03Kp8DnWV2mpBghfZ8MWAwN0q.svg">
+<meta property="og:image" content="https://asciinema.org/a/NvrtG3Nmf8cqa4gWlssjGmVEc.svg">
+<meta property="og:image" content="https://ulgoon.github.io/git/git-reset.png">
+<meta property="og:image" content="https://asciinema.org/a/ujEFWlHFz8VYWOV4pnnCMrTX6.svg">
+<meta property="og:image" content="https://ulgoon.github.io/git/git-revert.png">
+<meta property="article:published_time" content="2019-09-10T04:47:59.000Z">
+<meta property="article:modified_time" content="2021-08-31T05:01:11.685Z">
+<meta property="article:author" content="Clifford Choi">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://asciinema.org/a/Fu27tl0y6RpHBPnTBHpPHh8St.svg">
+
+
+<link rel="canonical" href="https://ulgoon.github.io/2019/09/git-alone/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://ulgoon.github.io/2019/09/git-alone/","path":"2019/09/git-alone/","title":"혼자 해보는 git"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>혼자 해보는 git | Ulgoon's blog</title>
+  
+
+
+
+<!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PCQJX9G');</script>
+    
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KGM4TJ7');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Google adsense -->
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9879476224952329"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Ulgoon's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Gopher</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+        <li class="menu-item menu-item-git"><a href="/git-for-newbie/" rel="section"><i class="git fa-fw"></i>git</a></li>
+  </ul>
+</nav>
+
+
+
+<!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PCQJX9G"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGM4TJ7"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%EC%84%B1"><span class="nav-number">1.</span> <span class="nav-text"> 프로젝트 구성</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#readmemd"><span class="nav-number">1.1.</span> <span class="nav-text"> README.md</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#license"><span class="nav-number">1.2.</span> <span class="nav-text"> LICENSE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitignore"><span class="nav-number">1.3.</span> <span class="nav-text"> .gitignore</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#troubleshoot-%EA%B0%81-%EB%8B%A8%EA%B3%84%EB%B3%84-%EB%90%98%EB%8F%8C%EB%A6%AC%EA%B8%B0-%EC%88%98%EC%A0%95%ED%95%98%EA%B8%B0"><span class="nav-number">2.</span> <span class="nav-text"> Troubleshoot: 각 단계별 되돌리기, 수정하기</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rename-files-directories"><span class="nav-number">2.1.</span> <span class="nav-text"> Rename files, directories</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undoing"><span class="nav-number">2.2.</span> <span class="nav-text"> Undoing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unstaging"><span class="nav-number">2.3.</span> <span class="nav-text"> Unstaging</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#remove-with-unstage"><span class="nav-number">2.3.1.</span> <span class="nav-text"> Remove with unstage</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#edit-commit"><span class="nav-number">2.4.</span> <span class="nav-text"> Edit commit</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%A7%81%EC%A0%84-commit%EC%97%90-%EB%8C%80%ED%95%B4"><span class="nav-number">2.4.1.</span> <span class="nav-text"> 직전 commit에 대해</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EC%9D%B4%EC%A0%84-commit%EC%97%90-%EB%8C%80%ED%95%B4"><span class="nav-number">2.4.2.</span> <span class="nav-text"> 이전 commit에 대해</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%EC%9D%B4%EC%A0%84-commit-%EB%A9%94%EC%8B%9C%EC%A7%80-%EC%88%98%EC%A0%95%ED%95%98%EA%B8%B0"><span class="nav-number">2.4.2.1.</span> <span class="nav-text"> 이전 commit 메시지 수정하기</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reset-commit"><span class="nav-number">2.5.</span> <span class="nav-text"> Reset commit</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#worse-case-reset"><span class="nav-number">2.5.1.</span> <span class="nav-text"> Worse Case: Reset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#better-case-revert"><span class="nav-number">2.5.2.</span> <span class="nav-text"> Better Case: Revert</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#practice"><span class="nav-number">3.</span> <span class="nav-text"> Practice</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Clifford Choi</p>
+  <div class="site-description" itemprop="description">Welcome to my blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ulgoon" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ulgoon" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:me@ulgoon.com" title="E-Mail → mailto:me@ulgoon.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/channel/UCnv_MdGse5kLFslpAC3g5vw" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;channel&#x2F;UCnv_MdGse5kLFslpAC3g5vw" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://ulgoon.github.io/2019/09/git-alone/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Clifford Choi">
+      <meta itemprop="description" content="Welcome to my blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ulgoon's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          혼자 해보는 git
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-10 13:47:59" itemprop="dateCreated datePublished" datetime="2019-09-10T13:47:59+09:00">2019-09-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-08-31 14:01:11" itemprop="dateModified" datetime="2021-08-31T14:01:11+09:00">2021-08-31</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>앞의 게시물에서 git의 기본적인 시작법을 배웠다면, 이제부터는 본격적인 개발을 위한 git을 배워봅니다.</p>
+<span id="more"></span>
+<h2 id="프로젝트-구성"><a class="markdownIt-Anchor" href="#프로젝트-구성"></a> 프로젝트 구성</h2>
+<p>앞서 <code>$ git clone</code>을 이용하여 remote repository를 생성할 때, 세개의 파일을 생성했습니다. 각 파일에 대해 알아보자면,</p>
+<h3 id="readmemd"><a class="markdownIt-Anchor" href="#readmemd"></a> <a target="_blank" rel="noopener" href="http://README.md">README.md</a></h3>
+<p>README.md는 이 repository 또는 Project를 설명하기 위한 표지와 같습니다. 이 Project에 대한 간략한 소개와 함께 설치법, 라이센스, 구성 등을 설명합니다.</p>
+<p>.md 는 Markdown으로 웹문서를 작성할 때 사용하는 HTML을 좀 더 편리하게 작성할 수 있도록 각 태그를 1:1 매칭한 문법이 존재합니다.</p>
+<p>다만 표준이 존재하지 않기 때문에 github flavored Markdown 문법으로 작성하셔야 의도한 대로 보이게 됩니다.</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 주석표기 --&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 제목 텍스트 --&gt;</span><br><span class="line"><span class="section"># h1</span></span><br><span class="line"><span class="section">## h2</span></span><br><span class="line"><span class="section">### h3</span></span><br><span class="line"><span class="section">#### h4</span></span><br><span class="line"><span class="section">##### h5</span></span><br><span class="line"><span class="section">###### h6</span></span><br><span class="line"></span><br><span class="line">&lt;!-- 순서 없는 리스트(- <span class="emphasis">* + 혼용 가능) --&gt;</span></span><br><span class="line"><span class="emphasis">- Item1</span></span><br><span class="line"><span class="emphasis">    - Item1-1</span></span><br><span class="line"><span class="emphasis">        - Item1-1-1</span></span><br><span class="line"><span class="emphasis">*</span> Item2</span><br><span class="line"><span class="bullet">+</span> Item3</span><br><span class="line"></span><br><span class="line">&lt;!-- 순서 있는 리스트 --&gt;</span><br><span class="line"><span class="bullet">1.</span> Item1</span><br><span class="line"><span class="bullet">2.</span> Item2</span><br><span class="line"></span><br><span class="line">&lt;!-- 하이퍼링크 --&gt;</span><br><span class="line">[<span class="string">링크 텍스트</span>](<span class="link">링크 URL</span>)</span><br><span class="line"></span><br><span class="line">&lt;!-- 이미지 --&gt;</span><br><span class="line">![<span class="string">대체 텍스트</span>](<span class="link">이미지 URL</span>)</span><br><span class="line"></span><br><span class="line">&lt;!-- 강조 표기 --&gt;</span><br><span class="line"><span class="emphasis">*Italic*</span></span><br><span class="line"><span class="strong">**Bold**</span></span><br><span class="line">~Line Break~</span><br><span class="line"><span class="emphasis">_Single underscore_</span></span><br><span class="line"></span><br><span class="line">&lt;!-- 인용문(Blockquote) --&gt;</span><br><span class="line"><span class="quote">&gt; 인용할 문장</span></span><br><span class="line"></span><br><span class="line">&lt;!-- Code 입력(문장 내) --&gt;</span><br><span class="line">This is how <span class="code">`code`</span> works.</span><br><span class="line"></span><br><span class="line">&lt;!-- Code 입력(블록) --&gt;</span><br><span class="line"></span><br><span class="line"><span class="code">` `</span><span class="code">`` `</span></span><br><span class="line">def say<span class="emphasis">_hello():</span></span><br><span class="line"><span class="emphasis">    return &quot;hello&quot;</span></span><br><span class="line"><span class="emphasis">` ```  `</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">&lt;!-- 수평선 --&gt;</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">Page 1</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis"><span class="strong">**<span class="emphasis">*</span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="emphasis">Page 2</span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="emphasis"></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="emphasis">-----</span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="emphasis">Page 3</span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="emphasis"></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="emphasis"></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="emphasis"></span></span></span></span><br></pre></td></tr></table></figure>
+<h3 id="license"><a class="markdownIt-Anchor" href="#license"></a> LICENSE</h3>
+<p>오픈소스 프로젝트에서 가장 중요한 License는 내가 만들 때에도, 배포할 때에도 가장 신경써야 하는 일 중 하나입니다.</p>
+<p>가장 많이 사용하는 License는 다음과 같습니다.</p>
+<ul>
+<li>MIT License
+<ul>
+<li>MIT에서 만든 라이센스로, 모든 행동에 제약이 없으며, 저작권자는 소프트웨어와 관련한 책임에서 자유롭습니다.</li>
+</ul>
+</li>
+<li>Apache License 2.0
+<ul>
+<li>Apache 재단이 만든 라이센스로, 특허권 관련 내용이 포함되어 있습니다.</li>
+</ul>
+</li>
+<li>GNU General Public License v3.0
+<ul>
+<li>가장 많이 알려져있으며, 의무사항(해당 라이센스가 적용된 소스코드 사용시 GPL을 따라야 함)이 존재합니다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="gitignore"><a class="markdownIt-Anchor" href="#gitignore"></a> .gitignore</h3>
+<p><code>.gitignore</code>는 git이 파일을 추적할 때, 어떤 파일이나 폴더 등을 추적하지 않도록 명시하기 위해 작성하며, 해당 문서에 작성된 리스트는 수정사항이 발생해도 git이 무시하게 됩니다.</p>
+<p>특정 파일 확장자를 무시하거나 이름에 패턴이 존재하는 경우, 또는 특정 디렉토리 아래의 모든 파일을 무시할 수 있습니다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 주석을 달기 위한 Hashtag</span><br><span class="line"></span><br><span class="line"># MacOS Setup</span><br><span class="line">.DS_Store</span><br><span class="line"></span><br><span class="line"># Python cache files</span><br><span class="line">.py[cdo]</span><br><span class="line"></span><br><span class="line"># Important files</span><br><span class="line">/Important</span><br><span class="line"></span><br><span class="line"># AWS key</span><br><span class="line">key.pem</span><br></pre></td></tr></table></figure>
+<h2 id="troubleshoot-각-단계별-되돌리기-수정하기"><a class="markdownIt-Anchor" href="#troubleshoot-각-단계별-되돌리기-수정하기"></a> Troubleshoot: 각 단계별 되돌리기, 수정하기</h2>
+<p>작업을 하다보면 실수로 어떤 일을 했을 경우, git에서는 다음과 같은 방법으로 되돌리거나 삭제할 수 있습니다.</p>
+<h3 id="rename-files-directories"><a class="markdownIt-Anchor" href="#rename-files-directories"></a> Rename files, directories</h3>
+<p>파일이나 폴더를 이동하거나 이름을 바꿀 경우, git은 rename이 아닌 deleted, untracked 로 기존의 파일이 삭제되고 새로운 파일이 생성되었다고 인식하게 됩니다.</p>
+<p>이런 경우, 특정 파일에 대한 이력을 확인하기 힘들어 질 수 있기 때문에 반드시 이동 관련 명령들은 git에게 해당 작업을 위임처리 해야 합니다.</p>
+<p>Worst: <code>$ mv server.py backend/</code></p>
+<p>Best: <code>$ git mv server.py backend/</code></p>
+<h3 id="undoing"><a class="markdownIt-Anchor" href="#undoing"></a> Undoing</h3>
+<p>작업을 열심히 하다가 잘못된 방향으로 들어서기 시작하면 깨닫는 순간 이미 늦었다는 사실을 알아차립니다. 이럴 때 선택할 수 있는 것은 (중간중간 저장했다면) 해당 commit으로 이동할 수 있겠지만, 만약 해당 branch의 최신사항으로 돌아가 다시 시작하고 싶다면 다음과 같이 명령합니다.</p>
+<p><a target="_blank" rel="noopener" href="https://asciinema.org/a/Fu27tl0y6RpHBPnTBHpPHh8St"><img src="https://asciinema.org/a/Fu27tl0y6RpHBPnTBHpPHh8St.svg" alt="asciicast" /></a></p>
+<p>전체 되돌리기</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git checkout -- .</span></span><br></pre></td></tr></table></figure>
+<p>특정 파일만 되돌리기</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git checkout -- 파일이름</span></span><br></pre></td></tr></table></figure>
+<h3 id="unstaging"><a class="markdownIt-Anchor" href="#unstaging"></a> Unstaging</h3>
+<p>작업사항을 <code>$ git add</code> 하였으나, 해당 commit이 아니라서 unstaging을 해야 하는 경우, Index에 올라간 파일을 내려주면 됩니다.</p>
+<p><a target="_blank" rel="noopener" href="https://asciinema.org/a/Y55mgQP0Yn8r6EEyBRSk0ysxX"><img src="https://asciinema.org/a/Y55mgQP0Yn8r6EEyBRSk0ysxX.svg" alt="asciicast" /></a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git reset HEAD 파일이름</span></span><br></pre></td></tr></table></figure>
+<h4 id="remove-with-unstage"><a class="markdownIt-Anchor" href="#remove-with-unstage"></a> Remove with unstage</h4>
+<p>Unstaging과 동시에 파일 삭제까지 하고 싶을 때에는 <code>$ git rm -f 파일이름</code> 이라고 하면 파일을 unstaging 후 삭제까지 진행합니다.</p>
+<h3 id="edit-commit"><a class="markdownIt-Anchor" href="#edit-commit"></a> Edit commit</h3>
+<p>Commit이 끝나 repository에 존재하는 commit을 수정하기 위해서는 다음과 같이 수행합니다.</p>
+<h4 id="직전-commit에-대해"><a class="markdownIt-Anchor" href="#직전-commit에-대해"></a> 직전 commit에 대해</h4>
+<p>Remote repository로 push 되지 않은 직전 commit을 수정하기 위해서는 <code>--amend</code> flag를 사용합니다.</p>
+<ul>
+<li>가장 최근 local commit 수정, 삭제하는 영상<br />
+<a target="_blank" rel="noopener" href="https://asciinema.org/a/PplVwNAZND1lApmRLRo2q3jem"><img src="https://asciinema.org/a/PplVwNAZND1lApmRLRo2q3jem.svg" alt="asciicast" /></a></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git commit --amend</span></span><br></pre></td></tr></table></figure>
+<h4 id="이전-commit에-대해"><a class="markdownIt-Anchor" href="#이전-commit에-대해"></a> 이전 commit에 대해</h4>
+<p>이미 직전 커밋이 아니게 되어버린 commit들은 <code>rebase</code>를 활용합니다.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git rebase -i &lt;commit&gt;</span></span><br></pre></td></tr></table></figure>
+<p>만약 rebase 동작 중 중지를 원한다면, <code>--abort</code> flag로 해당 작업을 중지합니다.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git rebase --abort</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>rebase 중지하기</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://asciinema.org/a/ifWYyxutPfg04bTMrFA75KVms"><img src="https://asciinema.org/a/ifWYyxutPfg04bTMrFA75KVms.svg" alt="asciicast" /></a></p>
+<h5 id="이전-commit-메시지-수정하기"><a class="markdownIt-Anchor" href="#이전-commit-메시지-수정하기"></a> 이전 commit 메시지 수정하기</h5>
+<ul>
+<li>rebase하여 commit 수정하기</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://asciinema.org/a/03Kp8DnWV2mpBghfZ8MWAwN0q"><img src="https://asciinema.org/a/03Kp8DnWV2mpBghfZ8MWAwN0q.svg" alt="asciicast" /></a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git rebase -i &lt;commit&gt;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit --amend</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git rebase --<span class="built_in">continue</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="reset-commit"><a class="markdownIt-Anchor" href="#reset-commit"></a> Reset commit</h3>
+<p>Local repository에 존재하는 commit을 삭제하는 것은 큰 문제가 되지 않습니다. 하지만 협업중에 누군가 이미 pull 해버린 파일을 지우는 것은 많은 수고가 들어가게 됩니다. 이 때 선택할 수 있는 두가지 옵션 중 각 옵션의 차이를 알아봅니다.</p>
+<h4 id="worse-case-reset"><a class="markdownIt-Anchor" href="#worse-case-reset"></a> Worse Case: Reset</h4>
+<p><code>$ git reset</code> 을 활용하면 이전 커밋을 삭제할 수 있습니다.</p>
+<ul>
+<li>reset 으로 commit 삭제한 뒤 remote repository에 반영하기</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://asciinema.org/a/NvrtG3Nmf8cqa4gWlssjGmVEc"><img src="https://asciinema.org/a/NvrtG3Nmf8cqa4gWlssjGmVEc.svg" alt="asciicast" /></a></p>
+<p>ex) 현재 HEAD에서 이전에 올라간 3개의 commit 삭제, 되돌린 이력으로 remote에 강제 push</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git reset --hard HEAD~3</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push -f origin &lt;branch&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/git/git-reset.png" alt="" /></p>
+<p>이 명령을 수행하면 이 커밋들은 세상에 존재한 적이 없게되어 버려 깔끔해 보일 수 있지만 앞서 설명한 협업의 관점에서는 파일이 다시 살아난다던지, 과거의 이력이 사라지기 때문에 불완전한 이력이 되어버릴 수 있습니다. 혼자 할 때에도 이 방법을 추천하지 않는 이유가 내가 실수한 이력이 있더라도 그것을 고쳐내는 commit으로써 해당 이력을 유지해야 저장소의 연속성과 완전성을 보장 할 수 있습니다.</p>
+<h4 id="better-case-revert"><a class="markdownIt-Anchor" href="#better-case-revert"></a> Better Case: Revert</h4>
+<p>방법은 같지만 명령어가 다릅니다.</p>
+<p>기존의 실수한 이력을 거슬러 올라가면서 해당 사항을 최신으로 끌어올리는 <code>revert</code>를 사용합니다.</p>
+<ul>
+<li>revert 로 commit 취소 이력 남기기</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://asciinema.org/a/ujEFWlHFz8VYWOV4pnnCMrTX6"><img src="https://asciinema.org/a/ujEFWlHFz8VYWOV4pnnCMrTX6.svg" alt="asciicast" /></a></p>
+<p>ex) 현재 HEAD에서 직전의 3개의 commit을 순서대로 거슬러 올라가 해당 내역에 대해 commit, push 수행</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git revert --no-commit HEAD~3..</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin &lt;branch&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/git/git-revert.png" alt="" /></p>
+<p>이렇게 함으로써 commit을 되돌린 이력으로 최신을 유지함과 동시에 되돌리고자 했던 작업들도 남길 수 있게 됩니다.<br />
+자주 수행하게 되면, 위의 <code>reset</code>에 비해 모든 commit이 순방향으로 진행되지 않기에 이해에 어려움을 느낄 수 있지만, 이 문제는 commit 제목의 말머리를 달아줌으로써 해결할 수 있고, 되돌리고자 한 이유와 내역을 모두 남길 수 있어 팀원간의 케이스 공유에서는 더욱 도움이 됩니다.</p>
+<h2 id="practice"><a class="markdownIt-Anchor" href="#practice"></a> Practice</h2>
+<p>두개의 커밋을 생성한 뒤, 이 커밋을 취소하는 작업을 revert를 활용하여 진행해보세요.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/git/" rel="tag"># git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/09/first-to-git/" rel="prev" title="처음 만나는 git">
+                  <i class="fa fa-chevron-left"></i> 처음 만나는 git
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/08/git-together/" rel="next" title="git-together">
+                  git-together <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Clifford Choi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.css" integrity="sha256-+oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM=" crossorigin="anonymous">
+  <script class="next-config" data-name="katex" type="application/json">{"copy_tex_js":{"url":"https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.js","integrity":"sha256-etSqbSVF4+Lwe8MGk/Vanc1sR+mWv+qOG73fxWw9p94="}}</script>
+  <script src="/js/third-party/math/katex.js"></script>
+
+
+
+</body>
+</html>

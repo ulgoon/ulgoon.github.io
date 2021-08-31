@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ulgoon.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="터미널을 꾸며보자! 개발환경을 세팅하는 것은 매우 귀찮은 일입니다. 그럼에도 가장 중요한 것은 어떤 프로젝트를 하기 전 그에 맞는 개발환경을 구성하는 것입니다. 그 중에서도 가장 기본적인 터미널 관련 환경설정을 알아보려 합니다. 지금 하는 모든 것들은 개발과는 크게 관련없는 꾸미기 위한 장치들입니다. 하지만 못생긴 기본 터미널보다는 화려하면서도 필요한 정">
+<meta property="og:type" content="article">
+<meta property="og:title" content="my-dev-env">
+<meta property="og:url" content="https://ulgoon.github.io/2019/08/my-dev-env/index.html">
+<meta property="og:site_name" content="Ulgoon&#39;s blog">
+<meta property="og:description" content="터미널을 꾸며보자! 개발환경을 세팅하는 것은 매우 귀찮은 일입니다. 그럼에도 가장 중요한 것은 어떤 프로젝트를 하기 전 그에 맞는 개발환경을 구성하는 것입니다. 그 중에서도 가장 기본적인 터미널 관련 환경설정을 알아보려 합니다. 지금 하는 모든 것들은 개발과는 크게 관련없는 꾸미기 위한 장치들입니다. 하지만 못생긴 기본 터미널보다는 화려하면서도 필요한 정">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-08-09T04:54:35.000Z">
+<meta property="article:modified_time" content="2021-08-31T05:05:26.099Z">
+<meta property="article:author" content="Clifford Choi">
+<meta property="article:tag" content="zsh">
+<meta property="article:tag" content="iterm">
+<meta property="article:tag" content="oh-my-zsh">
+<meta property="article:tag" content="vim">
+<meta property="article:tag" content="vundle">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://ulgoon.github.io/2019/08/my-dev-env/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://ulgoon.github.io/2019/08/my-dev-env/","path":"2019/08/my-dev-env/","title":"my-dev-env"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>my-dev-env | Ulgoon's blog</title>
+  
+
+
+
+<!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PCQJX9G');</script>
+    
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KGM4TJ7');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Google adsense -->
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9879476224952329"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Ulgoon's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Gopher</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+        <li class="menu-item menu-item-git"><a href="/git-for-newbie/" rel="section"><i class="git fa-fw"></i>git</a></li>
+  </ul>
+</nav>
+
+
+
+<!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PCQJX9G"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGM4TJ7"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%ED%84%B0%EB%AF%B8%EB%84%90%EC%9D%84-%EA%BE%B8%EB%A9%B0%EB%B3%B4%EC%9E%90"><span class="nav-number">1.</span> <span class="nav-text"> 터미널을 꾸며보자!</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iterm2"><span class="nav-number">2.</span> <span class="nav-text"> iterm2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zsh"><span class="nav-number">3.</span> <span class="nav-text"> zsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#oh-my-zsh-agnoster-themes"><span class="nav-number">4.</span> <span class="nav-text"> oh-my-zsh + agnoster themes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solarized-dark"><span class="nav-number">4.1.</span> <span class="nav-text"> solarized dark</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#powerline-patched-font"><span class="nav-number">4.2.</span> <span class="nav-text"> powerline patched font</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#oh-my-zsh-themes"><span class="nav-number">4.3.</span> <span class="nav-text"> oh-my-zsh, themes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim-powerline"><span class="nav-number">5.</span> <span class="nav-text"> vim-powerline</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Clifford Choi</p>
+  <div class="site-description" itemprop="description">Welcome to my blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ulgoon" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ulgoon" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:me@ulgoon.com" title="E-Mail → mailto:me@ulgoon.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/channel/UCnv_MdGse5kLFslpAC3g5vw" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;channel&#x2F;UCnv_MdGse5kLFslpAC3g5vw" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://ulgoon.github.io/2019/08/my-dev-env/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Clifford Choi">
+      <meta itemprop="description" content="Welcome to my blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ulgoon's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          my-dev-env
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-08-09 13:54:35" itemprop="dateCreated datePublished" datetime="2019-08-09T13:54:35+09:00">2019-08-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-08-31 14:05:26" itemprop="dateModified" datetime="2021-08-31T14:05:26+09:00">2021-08-31</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="터미널을-꾸며보자"><a class="markdownIt-Anchor" href="#터미널을-꾸며보자"></a> 터미널을 꾸며보자!</h2>
+<p>개발환경을 세팅하는 것은 매우 귀찮은 일입니다. 그럼에도 가장 중요한 것은 어떤 프로젝트를 하기 전 그에 맞는 개발환경을 구성하는 것입니다. 그 중에서도 가장 기본적인 터미널 관련 환경설정을 알아보려 합니다. 지금 하는 모든 것들은 개발과는 크게 관련없는 꾸미기 위한 장치들입니다. 하지만 못생긴 기본 터미널보다는 화려하면서도 필요한 정보를 직관적으로 보여주도록 구성하는 것들은 생산성 향상에 큰 도움이 됩니다.</p>
+<span id="more"></span>
+<h2 id="iterm2"><a class="markdownIt-Anchor" href="#iterm2"></a> iterm2</h2>
+<p>iterm은 기본 터미널을 잘 활용할 수 있도록 도와주는 터미널 에뮬레이터 입니다. tmux라는 터미널 멀티플렉서를 활용해야 한 창에 여러개의 터미널을 띄울 수 있지만 명령어가 어려운 사용자들은 iterm으로도 얼마든지 이 기능을 활용할 수 있습니다.<br />
+<a target="_blank" rel="noopener" href="http://iterm2.com/">공식홈페이지</a> 에 접속하셔서 다운로드 받으실 수 있으며, 실행하면 끝입니다.</p>
+<p><strong>추가</strong>: iterm3.3 업데이트를 수행하면 status bar를 추가할 수 있습니다.</p>
+<h2 id="zsh"><a class="markdownIt-Anchor" href="#zsh"></a> zsh</h2>
+<p>맥과 우분투 모두 기본적으로 사용하는 쉘은 bash(Bourne Again SHell)입니다. 유닉스 환경의 기본 쉘이라 많이 사용하지만, 나온지 오래되기도 했고 단색의 환경은 다양한 정보를 표현하기에는 한계가 있는 것이 분명합니다. zsh은 컬러풀한 환경을 구성하는 것 뿐 아니라 저도 아직 다 모르는 다양한 기능들이 있다고 합니다. 대표적으로는 커맨드 오탈자 교정, 파일이름 자동완성 등 엄청 편한 기능들이 포함되어 있습니다. 이정도만 해도 개발자에게는 실수로 인한 타이핑 증가를 줄여줄 수 있어 생산성 향상에 큰 도움이 될 것입니다.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> brew install zsh</span></span><br></pre></td></tr></table></figure>
+<p>homebrew가 설치되어 있지 않다면 <a target="_blank" rel="noopener" href="http://brew.sh/index_ko.html">homebrew 공식홈페이지</a> 를 통해 꼭 설치 하시기 바랍니다. MacOS용 패키지 매니저인 homebrew는 애플에서 제공하지 않는 다양한 패키지들을 편리하게 설치할 수 있도록 도와줍니다.</p>
+<p>zsh를 정상적으로 설치하셨다면, shell 등록을 하고 기존의 bash를 zsh로 변경해줄 차례입니다.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">which</span> zsh</span></span><br></pre></td></tr></table></figure>
+<p>를 통해 zsh의 링크 위치를 알아내고, 이를 <code>$sudo vi /etc/shells</code>에 등록하여 시스템이 zsh를 인식할 수 있도록 합니다.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> chsh -s path/zsh</span></span><br></pre></td></tr></table></figure>
+<p>위 명령으로 shell을 zsh로 변경하면 새로운 쉘 환경을 사용할 준비가 되었습니다. iterm을 재시작하여 zsh이 정상적으로 작동하는지 확인한 다음, oh-my-zsh를 설치합니다.</p>
+<h2 id="oh-my-zsh-agnoster-themes"><a class="markdownIt-Anchor" href="#oh-my-zsh-agnoster-themes"></a> oh-my-zsh + agnoster themes</h2>
+<p>oh-my-zsh는 Robby Russell이 배포한 오픈소스 터미널 프레임워크입니다. 아직도 밋밋한 zsh에 작은 수고로 화려한 테마를 적용할 수 있도록 도와줍니다. <a target="_blank" rel="noopener" href="https://github.com/robbyrussell/oh-my-zsh">공식 github</a>에 가시면 자세한 설명과 함께 각종 테마들을 확인하실 수 있습니다. 그중에서도 많이 쓰이는 기본 테마는 agnoster 테마입니다.</p>
+<p>가장 많이 쓰이는 컬러설정인 solarized dark에 가장 잘 어울리면서도 깔끔하고 다양한 정보를 보여주는 파워라인이 많은 사랑을 얻고 있습니다.</p>
+<p>oh-my-zsh의 많은 테마들은 기본 폰트에서는 제공하지 않는 파워라인 패치폰트를 사용합니다. 따라서 파워라인 패치가 되어있는 폰트를 사용하셔야 합니다.</p>
+<h3 id="solarized-dark"><a class="markdownIt-Anchor" href="#solarized-dark"></a> solarized dark</h3>
+<p><code>iterm2 &gt; preferences &gt; profiles &gt; colors</code> 탭에서 iterm2의 컬러설정을 바꿀 수 있습니다. 터미널의 기본색인 검정색이나 흰색은 너무 단색이라 쉽게 눈이 피로해지는 단점이 있는데, solarized 컬러 스키마는 시안성 높으면서도 편안한 어두움을 제공합니다. <a target="_blank" rel="noopener" href="http://ethanschoonover.com/solarized">공식페이지</a> 에서 전체 설정을 다운로드 받으실 수 있습니다.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git://github.com/altercation/solarized.git</span></span><br></pre></td></tr></table></figure>
+<p>그냥 클론받으셔서 사용하셔도 됩니다.</p>
+<p>다시 iterm2의 컬러 설정으로 돌아와 오른 쪽 밑의 color presets… 드랍다운을 선택하시고, export 혹은 (가져오기?)를 선택하셔서 <code>방금 클론받은 디렉토리 &gt; iterm2-colors-solarized</code> 의 파일 두가지를 모두 불러와 설정하면 자동으로 변경이 완료됩니다.</p>
+<h3 id="powerline-patched-font"><a class="markdownIt-Anchor" href="#powerline-patched-font"></a> powerline patched font</h3>
+<p>개발자들은 고정폭글꼴을 사용합니다. 일반적인 텍스트의 가독성은 떨어지지만 코드를 볼 때에는1, l, I, ㅣ, | 을 명확하게 표현하는 것이 매우 중요합니다. 이런 글자를 구분하지 못해 오류가 난다면 시간낭비가 엄청날 뿐더러 찾고 난 뒤에도 별로 기분이 좋지 않단 말이죠…</p>
+<p>저는 코딩용 폰트로 오픈소스 코딩폰트인 Hack을 사용합니다. Dejavu 와 Bitstream을 기반으로 세미콜론과 콤마를 좀 더 잘 표현한 점이 매력적이라 적극적으로 사용하고 있습니다.</p>
+<p>oh-my-zsh에 많은 테마는 <a target="_blank" rel="noopener" href="http://sourcefoundry.org/hack/">Hack 공식버전</a> 을 사용하는 것 만으로도 무리없이 적용가능하지만, 좀 더 많은 기호를 지원하는 버전을 사용하기를 권장합니다.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/powerline/fonts/tree/master/Hack">powerline patched Hack font</a></p>
+<p>폰트 네가지(Regular, Bold, Italic, Bold-Italic) 모두 다운받은 뒤 시스템에 설치하시면 사용을 위한 준비가 모두 되었습니다. <code>Iterm2 &gt; preferences &gt; profiles &gt; text</code> 탭에서 폰트를 바꾸실 수 있는데 여기서 font와 NON-ASCII-font 모두 Hack으로 바꿔주시면 됩니다. 어차피 터미널에서 글을 읽기보다는 코딩을 더 많이 할테니 모두 바꿔줍니다.</p>
+<h3 id="oh-my-zsh-themes"><a class="markdownIt-Anchor" href="#oh-my-zsh-themes"></a> oh-my-zsh, themes</h3>
+<p>휴… 드디어 oh-my-zsh과 테마를 설정할 시간입니다.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh</span></span><br></pre></td></tr></table></figure>
+<p>위 명령어로 oh-my-zsh를 설치해줍니다. 설치가 완료되면 텍스트로 oh-my-zsh라는 그림이 그려질 것입니다.</p>
+<p>이제 쉘 환경파일인 zshrc에서 관련 작업을 진행합니다.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi ~/.zshrc</span></span><br></pre></td></tr></table></figure>
+<p>크게 건드릴 부분은 없고, <code>ZSH-THEME</code>라는 부분이 있는데 여기서 <code>&quot;robbyrussell&quot;</code> 이라고 되어있는 부분을 바꾸면 테마가 바뀝니다. 기본으로 <code>/.oh-my-zsh/themes</code>에 여러 테마가 있으며 이 중 하나를 선택하실수도, 새로운 테마를 저장한 뒤, 이를 적용하실 수도 있습니다.</p>
+<p>이번에는 robbyrussell을 <code>agnoster</code>로 바꿔보겠습니다. 만약 <code>random</code>으로 놓으시면 터미널을 실행할때 마다 다른 테마로 작업하실 수 있습니다…</p>
+<p>위에서 색상과 폰트를 모두 바꿔주었기 때문에 큰 문제없이 달라진 터미널 환경을 확인하실 수 있습니다. 저는 agnoster에 잠시 거처를 두고 생활하다 최근 <a target="_blank" rel="noopener" href="https://github.com/caiogondim/bullet-train-oh-my-zsh-theme">bullet-train</a>에 정착했습니다. pyenv, nvm, golang 등 개발환경을 더욱 직관적으로 표현하고 시간까지 확인할 수 있는 부분이 매력적이었습니다. 딱 제가 쓰는 환경들을 지원한다는 점이 매력적이었고, 어느정도 커스터마이즈 할 수 있다는 점도 재미있습니다.</p>
+<p>agnoster 테마가 좋은 점은 git의 브랜치와 상태를 바로 확인할 수 있다는 점입니다. solarized 스킴과 가장 잘 어울리는 테마이기도 합니다.</p>
+<h2 id="vim-powerline"><a class="markdownIt-Anchor" href="#vim-powerline"></a> vim-powerline</h2>
+<p>제 포스트 중 vim-go-with-vundle 를 따라하셨다면, vim의 플러그인 매니저인 vundle이 설치되었을 것입니다. 이를 이용해 간단하게 vim-powerline을 설치합니다.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Lokaltog/vim-powerline">github</a>에서 확인하고 설치할 수 있습니다.</p>
+<p>공식 레포에서는 pathogen 혹은 vundle을 활용해 설치할 것을 권장하고 있습니다.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vim ~/.vimrc</span></span><br><span class="line"></span><br><span class="line">(~/.vimrc)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Plugin `Lokaltog/vim-powerline`</span><br><span class="line"></span><br><span class="line">language en_US.UTF-8</span><br><span class="line">let g:Powerline_symbols = &#x27;fancy&#x27;</span><br><span class="line">set laststatus=2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>을 추가합니다.</p>
+<p>vim에서 <code>:PluginInstall</code> 명령으로 플러그인 설치를 명령하면 자동으로 설치를 진행합니다.</p>
+<p>혹시 fancy라고 했을 때, 예제의 화면이 아니라 부호가 깨져나온다면 'unicode’로 설정하시면 정상적으로 작동하는 것을 볼 수 있습니다.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/zsh/" rel="tag"># zsh</a>
+              <a href="/tags/iterm/" rel="tag"># iterm</a>
+              <a href="/tags/oh-my-zsh/" rel="tag"># oh-my-zsh</a>
+              <a href="/tags/vim/" rel="tag"># vim</a>
+              <a href="/tags/vundle/" rel="tag"># vundle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/09/first-to-git/" rel="next" title="처음 만나는 git">
+                  처음 만나는 git <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Clifford Choi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha256-55Ddc47WvWTK5vYVejnAuSK7USJaL7FQXrzQ4HiQ1WY=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.css" integrity="sha256-+oItviPaTmqjDhk4y4fLLUIMgRQYDV/ZyrRNvQiebWM=" crossorigin="anonymous">
+  <script class="next-config" data-name="katex" type="application/json">{"copy_tex_js":{"url":"https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.js","integrity":"sha256-etSqbSVF4+Lwe8MGk/Vanc1sR+mWv+qOG73fxWw9p94="}}</script>
+  <script src="/js/third-party/math/katex.js"></script>
+
+
+
+</body>
+</html>
